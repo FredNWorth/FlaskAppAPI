@@ -1,9 +1,3 @@
-# API = Application Programming Interface
-# Allows two applications to communicate
-# Doesn't need to know how either application works
-# Returns data as JSON
-# Web based APIs most common
-
 from flask import Flask
 from flask import request
 import json
