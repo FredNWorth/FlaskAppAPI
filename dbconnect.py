@@ -1,19 +1,20 @@
 import boto3
-import os
 
-dynamodb = boto3.resource('dynamodb', aws_access_key_id='AKIAXCE3IPJUCKTRIKXU',
-                          aws_secret_access_key='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',
-                          region_name='eu-west-2')
+dynamodb = boto3.client('dynamodb', aws_access_key_id='',
+                        aws_secret_access_key='',
+                        region_name='eu-west-2')
 
-table = dynamodb.Table('unboxed_stock')
+table_name = 'unboxed_stock'
+category_value = 'pokemon'
+query_params = {
+    'TableName': table_name,
+    'KeyConditionExpression': 'category = :category',
+    'ExpressionAttributeValues': {
+        ':category': {'S': category_value}
+    }
+}
+response = dynamodb.query(**query_params)
 
-
-def get_stock():
-    response = table.get_item(Key={
-        'category': {'SS': 'pokemon'}
-    })
-
-    return response['Item']
-
-
-print(get_stock())
+# print the items returned by the query
+for item in response['Items']:
+    print(item)
